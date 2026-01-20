@@ -41,7 +41,7 @@ It features an intelligent **Resume Analyzer**, automated **Cover Letter Generat
 | **Backend** | Next.js Server Actions, Inngest (Background Jobs) |
 | **Database** | PostgreSQL (Neon.tech), Prisma ORM |
 | **Auth** | Clerk |
-| **AI Integration** | Google Gemini API (or OpenAI) |
+| **AI Integration** | Google Gemini API |
 
 ---
 
@@ -58,22 +58,24 @@ The application is built on a **Serverless Architecture**.
 
 Follow these steps to run the project locally.
 
-### 1. Clone the Repository
+### 1\. Clone the Repository
 ```bash
 git clone [https://github.com/Venuu07/sensAI-ai-career-coach.git](https://github.com/Venuu07/sensAI-ai-career-coach.git)
 cd sensAI-ai-career-coach
+```
 
 ### 2\. Install Dependencies
 
-Bash
+```bash
 
     npm install
+```
 
 ### 3\. Setup Environment Variables
 
 Create a `.env` file in the root directory and add the following keys:
 
-Code snippet
+```Code snippet
 
     # Database (Neon)
     DATABASE_URL="postgresql://user:password@ep-pooler.region.aws.neon.tech/sensai?sslmode=require"
@@ -87,21 +89,24 @@ Code snippet
     
     # Background Jobs
     INNGEST_EVENT_KEY=local  # Optional for dev
+```
 
 ### 4\. Setup Database
 
-Bash
+```bash
 
     npx prisma generate
     npx prisma db push
+```
 
 ### 5\. Run the Application
 
-Bash
+```bash
 
     npm run dev
 
 Open [http://localhost:3000](https://www.google.com/search?q=http://localhost:3000) to view it in your browser.
+```
 
 * * *
 
