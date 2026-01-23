@@ -1,4 +1,4 @@
-"use client"; // 👈 CRITICAL: This fixes the Hydration Error
+"use client"; 
 
 import { UserButton } from "@clerk/nextjs";
 import { ChartNoAxesColumn, ChevronDown, FileText, GraduationCap, PenBox, StarsIcon } from "lucide-react";
@@ -10,8 +10,22 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { useEffect, useState } from "react";
 
 export const UserMenu = () => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  // 1. Wait until the component is running in the browser
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // 2. If we are on the server (not mounted yet), show nothing (or a skeleton)
+  // This prevents the "ID Mismatch" error because the server never generates the random ID.
+  if (!isMounted) {
+    return null; 
+  }
+  
   return (
     <>
       <Link href={"/dashboard"}>
