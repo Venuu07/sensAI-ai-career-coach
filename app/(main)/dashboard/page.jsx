@@ -1,10 +1,10 @@
 import { getUserOnboardingStatus } from "@/actions/user";
-import { redirect } from "next/dist/server/api-utils";
+import { redirect } from "next/navigation";
 
 const IndustryInsightsPage = async() => {
     const {isOnboarded}= await getUserOnboardingStatus(); 
   
-    if(isOnboarded){
+    if(!isOnboarded){
       redirect("/onboarding")
     }
   return (
