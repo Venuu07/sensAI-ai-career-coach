@@ -7,7 +7,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const model = genAI.getGenerativeModel({
-  model: "gemini-2.5-flash", // Using the working model
+  model: "gemini-2.5-flash", // Reverted to standard stable model just in case
 });
 
 export const generateAIInsights = async (industry) => {
@@ -39,20 +39,23 @@ export const generateAIInsights = async (industry) => {
   
   const insights = JSON.parse(cleanedText);
 
-  // --- FIXES FOR DATABASE ISSUES ---
 
-  // 1. Fix Demand Level (High -> HIGH)
   if (insights.demandLevel) {
     insights.demandLevel = insights.demandLevel.toUpperCase(); 
   }
 
-  // 2. Fix the "POSTIVE" Typo issue
   if (insights.marketOutlook) {
     const outlook = insights.marketOutlook.toUpperCase();
-    if (outlook === "POSITIVE") {
-        insights.marketOutlook = "POSTIVE"; // 👈 Force the typo to match your DB
+    
+    if (outlook === "POSTIVE" || outlook === "POSITIVE") {
+        insights.marketOutlook = "POSITIVE"; 
+    } else if (outlook === "NEUTRAL") {
+        insights.marketOutlook = "NEUTRAL";
+    } else if (outlook === "NEGATIVE") {
+        insights.marketOutlook = "NEGATIVE";
     } else {
-        insights.marketOutlook = outlook;
+       
+        insights.marketOutlook = "NEUTRAL";
     }
   }
 
@@ -73,6 +76,7 @@ export async function getIndustryInsights() {
   });
 
   if (!user) throw new Error("User not found");
+
 
   if (!user.industryInsight) {
     const insights = await generateAIInsights(user.industry);
