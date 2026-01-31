@@ -1,9 +1,12 @@
 "use server";
 
+export const maxDuration = 60;
+
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { generateAIInsights } from "./dashboard";
-import { revalidatePath } from "next/cache"; // 👈 1. IMPORT THIS
+import { revalidatePath } from "next/cache"; 
+
 
 export async function updateUser(data) {
   const { userId } = await auth();
@@ -29,7 +32,7 @@ export async function updateUser(data) {
           },
         });
 
-        // If industry doesn't exist, create it with AI
+       
         if (!industryInsight) {
           const insights = await generateAIInsights(data.industry);
 
