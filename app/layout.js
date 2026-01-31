@@ -6,6 +6,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import { Toaster } from "sonner";
 
+export const maxDuration = 60;
 
 const inter=Inter({subsets :["latin"]})
 
